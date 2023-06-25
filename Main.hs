@@ -63,18 +63,13 @@ digitsDF numbers target guesses
 
 
 tryOperations numbers target guesses = safeHead $ catMaybes $ map f $ pairs numbers
-  where f (a,b,ns) = safeHead $ catMaybes
-          [aAdd a b ns, aSub a b ns, aMul a b ns, aDiv a b ns]
-        aAdd a b ns
-          | otherwise = digitsDF ns' target ((a, " + ", b, ns'):guesses)  
+  where f (a,b,ns) = safeHead $ catMaybes 
+          (if (a < b) then [] else [aAdd a b ns, aSub a b ns, aMul a b ns, aDiv a b ns])
+        aAdd a b ns = digitsDF ns' target ((a, " + ", b, ns'):guesses)  
             where ns' = (a + b):ns                           
-        aSub a b ns
-          | a < b = Nothing
-          | otherwise = digitsDF ns' target ((a, " - ", b, ns'):guesses)   
+        aSub a b ns = digitsDF ns' target ((a, " - ", b, ns'):guesses)
             where ns' = (a - b):ns        
-        aMul a b ns 
-          | a < b = Nothing 
-          | otherwise = digitsDF ns' target ((a, " * ", b, ns'):guesses) 
+        aMul a b ns = digitsDF ns' target ((a, " * ", b, ns'):guesses)
             where ns' = (a * b):ns         
         aDiv a b ns 
           | b == 0 = Nothing
