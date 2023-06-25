@@ -114,5 +114,15 @@ printOp (a, op, b, ns) = do
     putStr $ showFormula a op b $ (fromJust $ lookup op ops) a b
     putStrLn $ show ns
 
+-- usage: ./Main algorithm target numbers...
 
+main = do args <- getArgs
+          let algorithm = head args
+              nums = tail args
+              target = (read $ head nums)::Int
+              numbers = (map read $ tail nums)::[Int]
+          if algorithm == "d"
+            then doDeep numbers target
+            else doDigits numbers target
+                                  
   
