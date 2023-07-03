@@ -19,12 +19,11 @@ ops = [(Div,div), (Add, (+)), (Sub, (-)), (Mul, (*))]
 -- Don't make pairs where a < b
                     
 pairs numbers = concatMap f numbers 
-  where f a = catMaybes $ map (g ns a) $ ns
+  where f a = catMaybes $ map (g a) $ ns
               where ns = delete a numbers
-                    g numbers a b = if (a < b)
-                                    then Nothing
-                                    else Just (a, b, delete b numbers)
-
+                    g a b
+                      | (a < b) = Nothing
+                      | otherwise = Just (a, b, delete b ns)
 safeHead x
   | null x = Nothing
   | otherwise = Just $ head x
