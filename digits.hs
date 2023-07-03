@@ -109,7 +109,7 @@ printOp (a, op, b, ns) = do
     putStr $ showFormula a op b $ (fromJust $ lookup op ops) a b
     putStrLn $ show ns
 
--- usage: ./Main algorithm target numbers...
+-- usage: ./digits b|d target numbers...
 
 main = do args <- getArgs
           let algorithm = head args
